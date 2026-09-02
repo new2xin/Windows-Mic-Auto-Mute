@@ -1,11 +1,11 @@
-# Lyra Auto Mute
+# Windows Mic Auto Mute
 
-Windowsの録音エンドポイントをCore Audio APIで監視し、設定に一致するマイクが認識されたら `SetMute(TRUE)` を送ります。Lyra本体の赤いミュートランプがWindowsの録音デバイスミュートと連動する環境を前提にしています。
+Windowsの録音エンドポイントをCore Audio APIで監視し、設定に一致するマイクが認識されたら `SetMute(TRUE)` を送ります。特定のマイク専用ではなく、Windowsが録音エンドポイントとして認識する機器を対象にできます。
 
 ## 初回セットアップ
 
 1. このフォルダで `build.bat` を実行します。.NET 8 SDKだけを使い、外部NuGetパッケージは追加しません。
-2. `devices.json` の `nameContains` を実際の録音デバイス名に合わせます。AKG Lyraはこの環境では `AKG C44-USB Microphone` と表示されるため、初期値は `C44-USB` にしています。
+2. `devices.json` の `nameContains` を実際の録音デバイス名に合わせます。この環境の設定例は `AKG C44-USB Microphone` 用で、初期値は `C44-USB` です。
 3. `auto_mute_on.bat` を一度実行します。ログオン時タスクを登録し、監視を直ちに開始します。
 
 `auto_mute_on.bat` は現在の認識済みデバイスにも即時に適用します。USB抜き差し、ハブ再接続、スリープ復帰などでエンドポイントが再列挙された場合も、最大約2秒以内に再適用します。
@@ -40,7 +40,7 @@ Windowsの録音エンドポイントをCore Audio APIで監視し、設定に�
 }
 ```
 
-表示名が似た機器にも一致してしまう場合は、`status.bat` で取得したIDの固有部分を `idContains` に設定します。`devices.example.json` にLyraとTM-250Uの例があります。
+表示名が似た機器にも一致してしまう場合は、`status.bat` で取得したIDの固有部分を `idContains` に設定します。`devices.example.json` にC44-USBとTM-250Uの例があります。
 
 ## 確認と制限
 

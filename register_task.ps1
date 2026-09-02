@@ -1,8 +1,8 @@
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$exe = Join-Path $root 'dist\LyraAutoMute.exe'
+$exe = Join-Path $root 'dist\WindowsMicAutoMute.exe'
 $config = Join-Path $root 'devices.json'
-$taskName = 'Lyra Auto Mute'
+$taskName = 'Windows Mic Auto Mute'
 
 if (-not (Test-Path -LiteralPath $exe)) {
     throw "実行ファイルがありません: $exe"

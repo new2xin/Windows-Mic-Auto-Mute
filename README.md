@@ -1,6 +1,6 @@
-# Lyra Auto Mute
+# Windows Mic Auto Mute
 
-Lyra Auto Mute is a small Windows utility that automatically mutes selected USB microphone recording endpoints through the Windows Core Audio `IAudioEndpointVolume::SetMute(TRUE)` API.
+Windows Mic Auto Mute is a small Windows utility that automatically mutes selected microphone recording endpoints through the Windows Core Audio `IAudioEndpointVolume::SetMute(TRUE)` API.
 
 It is intended for microphones that are permanently connected and should start muted whenever Windows detects them. The utility also handles USB re-enumeration, hub reconnects, and resume from sleep by checking for matching active capture endpoints every two seconds.
 
@@ -26,13 +26,13 @@ The USB device itself must expose a Windows recording endpoint. Physical USB 5V 
 2. Check or edit `devices.json`.
 3. Run `auto_mute_on.bat` once.
 
-`auto_mute_on.bat` registers the `Lyra Auto Mute` logon task and starts the watcher immediately. It also applies mute to any currently matching device.
+`auto_mute_on.bat` registers the `Windows Mic Auto Mute` logon task and starts the watcher immediately. It also applies mute to any currently matching device.
 
 To disable the automation, run `auto_mute_off.bat`. This stops and removes the logon task but does not change the current mute state. Run `unmute_now.bat` separately if you want to unmute after disabling the watcher.
 
 ## Device configuration
 
-The default configuration targets AKG Lyra as it appears on the tested Windows system: `AKG C44-USB Microphone`.
+The checked-in `devices.json` is an example for a microphone that appears as `AKG C44-USB Microphone` on the tested Windows system. The application itself has no vendor- or model-specific logic.
 
 ```json
 {
@@ -47,7 +47,7 @@ The default configuration targets AKG Lyra as it appears on the tested Windows s
 }
 ```
 
-For a TM-250U, change `nameContains` to `TM-250U`. If multiple devices share a similar name, run `status.bat` and use a distinctive portion of the reported endpoint ID in `idContains`. `devices.example.json` contains both Lyra and TM-250U examples.
+For a TM-250U or any other Windows recording device, change `nameContains` to a distinctive part of its Windows friendly name. If multiple devices share a similar name, run `status.bat` and use a distinctive portion of the reported endpoint ID in `idContains`. `devices.example.json` contains C44-USB and TM-250U examples.
 
 ## Commands
 

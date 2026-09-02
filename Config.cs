@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace LyraAutoMute;
+namespace WindowsMicAutoMute;
 
 public sealed class AppConfig
 {

@@ -2,7 +2,7 @@
   "pollIntervalMs": 2000,
   "targets": [
     {
-      "nameContains": "Lyra",
+      "nameContains": "C44-USB",
       "idContains": "",
       "enabled": true
     },

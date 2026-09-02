@@ -4,8 +4,8 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>LyraAutoMute</AssemblyName>
-    <RootNamespace>LyraAutoMute</RootNamespace>
+    <AssemblyName>WindowsMicAutoMute</AssemblyName>
+    <RootNamespace>WindowsMicAutoMute</RootNamespace>
     <InvariantGlobalization>true</InvariantGlobalization>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>

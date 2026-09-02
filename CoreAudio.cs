@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace LyraAutoMute;
+namespace WindowsMicAutoMute;
 
 public sealed record AudioCaptureDevice(string Id, string FriendlyName, int State);
 

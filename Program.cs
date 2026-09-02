@@ -1,18 +1,18 @@
 using System.Text;
 
-namespace LyraAutoMute;
+namespace WindowsMicAutoMute;
 
 internal static class Program
 {
     private const string Usage = """
-        LyraAutoMute - Windows録音エンドポイント自動ミュート
+        WindowsMicAutoMute - Windows録音エンドポイント自動ミュート
 
         使い方:
-          LyraAutoMute.exe --watch  --config devices.json
-          LyraAutoMute.exe --mute   --config devices.json
-          LyraAutoMute.exe --unmute --config devices.json
-          LyraAutoMute.exe --status --config devices.json
-          LyraAutoMute.exe --stop
+          WindowsMicAutoMute.exe --watch  --config devices.json
+          WindowsMicAutoMute.exe --mute   --config devices.json
+          WindowsMicAutoMute.exe --unmute --config devices.json
+          WindowsMicAutoMute.exe --status --config devices.json
+          WindowsMicAutoMute.exe --stop
         """;
 
     private static int Main(string[] args)
@@ -54,7 +54,7 @@ internal static class Program
 
     private static int Watch(AppConfig config, AppLogger logger)
     {
-        using var singleInstance = new Mutex(true, @"Local\LyraAutoMute.Watcher", out var acquired);
+        using var singleInstance = new Mutex(true, @"Local\WindowsMicAutoMute.Watcher", out var acquired);
         if (!acquired)
         {
             Console.WriteLine("自動ミュート監視は既に起動しています。");
@@ -62,7 +62,7 @@ internal static class Program
         }
 
         using var stopEvent = new EventWaitHandle(false, EventResetMode.ManualReset,
-            @"Local\LyraAutoMute.Stop", out _);
+            @"Local\WindowsMicAutoMute.Stop", out _);
         stopEvent.Reset();
         logger.Info($"watch started; interval={config.PollIntervalMs}ms");
         Console.WriteLine("自動ミュート監視中。終了はCtrl+Cです。");
@@ -95,7 +95,7 @@ internal static class Program
     {
         try
         {
-            using var stopEvent = EventWaitHandle.OpenExisting(@"Local\LyraAutoMute.Stop");
+            using var stopEvent = EventWaitHandle.OpenExisting(@"Local\WindowsMicAutoMute.Stop");
             stopEvent.Set();
             Console.WriteLine("自動ミュート監視へ停止を通知しました。");
         }
