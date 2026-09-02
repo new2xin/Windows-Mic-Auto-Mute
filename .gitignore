@@ -1,0 +1,9 @@
+.dotnet-cli/
+bin/
+obj/
+buildobj/
+buildout/
+dist.bak-*/
+buildobj.bak-*/
+dist/logs/
+*.bak-v*-*

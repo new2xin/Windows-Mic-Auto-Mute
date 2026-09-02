@@ -1,0 +1,15 @@
+{
+  "pollIntervalMs": 2000,
+  "targets": [
+    {
+      "nameContains": "Lyra",
+      "idContains": "",
+      "enabled": true
+    },
+    {
+      "nameContains": "TM-250U",
+      "idContains": "",
+      "enabled": false
+    }
+  ]
+}
