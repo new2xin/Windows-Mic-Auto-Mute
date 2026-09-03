@@ -9,6 +9,7 @@ internal static class Program
 
         使い方:
           WindowsMicAutoMute.exe --watch  --config devices.json
+          WindowsMicAutoMute.exe --startup-mute --config devices.json
           WindowsMicAutoMute.exe --mute   --config devices.json
           WindowsMicAutoMute.exe --unmute --config devices.json
           WindowsMicAutoMute.exe --status --config devices.json
@@ -20,7 +21,7 @@ internal static class Program
         Console.OutputEncoding = Encoding.UTF8;
         try
         {
-            var command = GetOption(args, "--watch", "--mute", "--unmute", "--status", "--list", "--stop");
+            var command = GetOption(args, "--watch", "--startup-mute", "--mute", "--unmute", "--status", "--list", "--stop");
             if (command is null || args.Contains("--help", StringComparer.OrdinalIgnoreCase) || args.Contains("-h"))
             {
                 Console.WriteLine(Usage);
@@ -39,6 +40,7 @@ internal static class Program
             return command switch
             {
                 "--watch" => Watch(config, logger),
+                "--startup-mute" => StartupMute(config, logger),
                 "--mute" => Apply(config, logger, true),
                 "--unmute" => Apply(config, logger, false),
                 "--status" => Status(config, logger),
@@ -110,6 +112,38 @@ internal static class Program
     {
         var matched = ApplyOnce(config, logger, mute, print: true);
         Console.WriteLine(matched == 0 ? "対象デバイスは見つかりませんでした。" : $"{matched}台を処理しました。");
+        return 0;
+    }
+
+    private static int StartupMute(AppConfig config, AppLogger logger)
+    {
+        logger.Info($"startup mute started; timeout={config.StartupTimeoutMs}ms");
+        Console.WriteLine("起動時ミュートを適用して終了します。");
+        var deadline = DateTime.UtcNow.AddMilliseconds(config.StartupTimeoutMs);
+        do
+        {
+            try
+            {
+                var matched = ApplyOnce(config, logger, true, print: true);
+                if (matched > 0)
+                {
+                    logger.Info("startup mute completed");
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error($"startup mute iteration failed: {ex}");
+            }
+
+            if (DateTime.UtcNow >= deadline)
+                break;
+            Thread.Sleep(Math.Min(config.PollIntervalMs,
+                Math.Max(1, (int)(deadline - DateTime.UtcNow).TotalMilliseconds)));
+        } while (true);
+
+        logger.Info("startup mute completed with no matching device");
+        Console.WriteLine("起動時点では対象デバイスが見つかりませんでした。");
         return 0;
     }
 

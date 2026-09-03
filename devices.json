@@ -1,5 +1,6 @@
 {
   "pollIntervalMs": 2000,
+  "startupTimeoutMs": 30000,
   "targets": [
     {
       "nameContains": "C44-USB",

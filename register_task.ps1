@@ -10,7 +10,7 @@ if (-not (Test-Path -LiteralPath $exe)) {
 
 $action = New-ScheduledTaskAction `
     -Execute $exe `
-    -Argument ('--watch --config "{0}"' -f $config) `
+    -Argument ('--startup-mute --config "{0}"' -f $config) `
     -WorkingDirectory (Join-Path $root 'dist')
 $trigger = New-ScheduledTaskTrigger -AtLogOn
 Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -RunLevel Limited -Force | Out-Null
